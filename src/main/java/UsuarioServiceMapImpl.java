@@ -2,6 +2,7 @@ import java.util.Collection;
 import java.util.HashMap;
 
 public class UsuarioServiceMapImpl implements UsuarioService {
+
     private HashMap<Integer, Usuario> usuarioMap;
 
     public UsuarioServiceMapImpl(){
@@ -35,8 +36,12 @@ public class UsuarioServiceMapImpl implements UsuarioService {
         }
     }
 
-    public void deleteUsuario(Integer id) {
-        usuarioMap.remove(id);
+    public void deleteUsuario(Integer id) throws UsuarioException {
+        if (usuarioMap.containsKey(id)){
+            usuarioMap.remove(id);
+        }else{
+            throw new UsuarioException("No existe el usuario");
+        }
     }
 
     public boolean UsuarioExists(Integer id) {

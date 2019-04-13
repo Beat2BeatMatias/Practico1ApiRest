@@ -6,6 +6,6 @@ public interface UsuarioService {
     public Collection<Usuario> getUsuarios();
     public Usuario getUsuario(Integer id);
     public Usuario editUsuario (Usuario usuario) throws UsuarioException;
-    public void deleteUsuario(Integer id);
+    public void deleteUsuario(Integer id) throws UsuarioException;
     public boolean UsuarioExists(Integer id);
 }
