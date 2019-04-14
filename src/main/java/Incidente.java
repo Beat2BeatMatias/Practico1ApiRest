@@ -4,6 +4,7 @@ public class Incidente {
 
     private int id;
     private Clasificacion clasificacion;
+    private int idProyecto;
     private String descripcion;
     private Usuario reportador;
     private Usuario reponsable;
@@ -11,7 +12,8 @@ public class Incidente {
     private Date fechaCreacion;
     private Date fechaSolucion;
 
-    public Incidente(int id, Clasificacion clasificacion, String descripcion, Usuario reportador, Usuario reponsable, Estado estado, Date fechaCreacion, Date fechaSolucion) {
+    public Incidente(int id, Clasificacion clasificacion, String descripcion, Usuario reportador, Usuario reponsable,
+                     Estado estado, Date fechaCreacion, Date fechaSolucion, int idProyecto) {
         this.id = id;
         this.clasificacion = clasificacion;
         this.descripcion = descripcion;
@@ -20,6 +22,7 @@ public class Incidente {
         this.estado = estado;
         this.fechaCreacion = fechaCreacion;
         this.fechaSolucion = fechaSolucion;
+        this.idProyecto=idProyecto;
     }
 
     public int getId() {
@@ -84,5 +87,13 @@ public class Incidente {
 
     public void setFechaSolucion(Date fechaSolucion) {
         this.fechaSolucion = fechaSolucion;
+    }
+
+    public int getIdProyecto() {
+        return idProyecto;
+    }
+
+    public void setIdProyecto(int idProyecto) {
+        this.idProyecto = idProyecto;
     }
 }

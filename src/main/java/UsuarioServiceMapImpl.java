@@ -9,8 +9,15 @@ public class UsuarioServiceMapImpl implements UsuarioService {
         usuarioMap=new HashMap<Integer, Usuario>();
     }
 
-    public void addUsuario(Usuario usuario) {
-        usuarioMap.put(usuario.getId(),usuario);
+    public void addUsuario(Usuario usuario) throws UsuarioException{
+        if(usuarioMap.get(usuario.getId()) != null) {
+            if (usuario.getId() != usuarioMap.get(usuario.getId()).getId())
+                usuarioMap.put(usuario.getId(), usuario);
+            else
+                throw new UsuarioException();
+        }else{
+            usuarioMap.put(usuario.getId(), usuario);
+        }
     }
 
     public Collection<Usuario> getUsuarios() {

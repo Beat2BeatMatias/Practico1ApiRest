@@ -11,24 +11,39 @@ public class IncidenteServiceMapImpl implements IncidenteService {
     }
 
     @Override
-    public void addIncidente(Incidente incidente) {
-        incidenteMap.put(incidente.getId(),incidente);
+    public void addIncidente(Incidente incidente) throws IncidenteException {
+        if (incidenteMap.get(incidente.getId()) != null){
+            if (incidente.getId() != incidenteMap.get(incidente.getId()).getId())
+                incidenteMap.put(incidente.getId(), incidente);
+            else
+                throw new IncidenteException();
+        }else{
+            incidenteMap.put(incidente.getId(), incidente);
+        }
     }
 
     @Override
     public Incidente editIncidente(Incidente incidente) throws IncidenteException {
-        Incidente incidenteEditado = incidenteMap.get(incidente.getId());
+       if (incidenteMap.get(incidente.getId()) != null) {
+           Incidente incidenteEditado = incidenteMap.get(incidente.getId());
+           if (incidente.getClasificacion().equals(incidenteEditado.getClasificacion()) &&
+                   incidente.getFechaCreacion().equals(incidenteEditado.getFechaCreacion()) &&
+                   incidente.getReponsable().getId() == (incidenteEditado.getReponsable().getId()) &&
+                   incidente.getReportador().getId() == (incidenteEditado.getReportador().getId()) &&
+                   incidente.getIdProyecto() == (incidenteEditado.getIdProyecto())) {
 
-        if(incidente.getClasificacion().equals(incidenteEditado.getClasificacion()) &&
-                incidente.getFechaCreacion().equals(incidenteEditado.getFechaCreacion()) &&
-                incidente.getReponsable().getId() == (incidenteEditado.getReponsable().getId()) &&
-                incidente.getReportador().getId() == (incidenteEditado.getReportador().getId())){
-            incidenteEditado.setDescripcion(incidente.getDescripcion());
-            incidenteEditado.setEstado(incidente.getEstado());
-            return incidenteEditado;
-        }else{
-            throw new IncidenteException("Solo se puede modificar la 'Descripción' y el 'Estado' del incidente");
-        }
+               incidenteEditado.setDescripcion(incidente.getDescripcion());
+               if (incidente.getEstado() == (Estado.RESUELTO) || incidente.getEstado() == (Estado.ASIGNADO))
+                   incidenteEditado.setEstado(incidente.getEstado());
+               else
+                   throw new IncidenteException("Solo puedes utilizar la palabra 'ASIGNADO' o 'RESUELTO'");
+               return incidenteEditado;
+           } else {
+               throw new IncidenteException("Solo se puede modificar la 'Descripción' y el 'Estado' del incidente");
+           }
+       }else {
+           throw new IncidenteException("No existe el incidente que quieres modificar");
+       }
     }
 
     @Override

@@ -10,8 +10,15 @@ public class ProyectoServiceMapImpl implements ProyectoService {
     }
 
     @Override
-    public void addProyecto(Proyecto proyecto) {
-        proyectoMap.put(proyecto.getId(),proyecto);
+    public void addProyecto(Proyecto proyecto) throws ProyectoException {
+        if (proyectoMap.get(proyecto.getId()) != null){
+            if (proyecto.getId() != proyectoMap.get(proyecto.getId()).getId())
+                proyectoMap.put(proyecto.getId(), proyecto);
+            else
+                throw new ProyectoException();
+        }else{
+            proyectoMap.put(proyecto.getId(), proyecto);
+        }
     }
 
     @Override
@@ -20,8 +27,11 @@ public class ProyectoServiceMapImpl implements ProyectoService {
     }
 
     @Override
-    public Proyecto getProyecto(Integer id) {
-        return proyectoMap.get(id);
+    public Proyecto getProyecto(Integer id) throws ProyectoException {
+      if(proyectoMap.get(id) != null)
+          return proyectoMap.get(id);
+      else
+          throw new ProyectoException();
     }
 
     @Override
