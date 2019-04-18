@@ -1,3 +1,4 @@
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
 
@@ -33,8 +34,15 @@ public class IncidenteServiceMapImpl implements IncidenteService {
                    incidente.getIdProyecto() == (incidenteEditado.getIdProyecto())) {
 
                incidenteEditado.setDescripcion(incidente.getDescripcion());
-               if (incidente.getEstado() == (Estado.RESUELTO) || incidente.getEstado() == (Estado.ASIGNADO))
+               if (incidente.getEstado() == (Estado.RESUELTO) || incidente.getEstado() == (Estado.ASIGNADO)) {
+                   if(incidente.getEstado() == Estado.RESUELTO && incidente.getFechaSolucion() != null){
+                       incidenteEditado.setEstado(incidente.getEstado());
+                       incidenteEditado.setFechaSolucion(incidente.getFechaSolucion());
+                   }else {
+                       throw new IncidenteException("Debe colocar una fecha de resolución");
+                   }
                    incidenteEditado.setEstado(incidente.getEstado());
+               }
                else
                    throw new IncidenteException("Solo puedes utilizar la palabra 'ASIGNADO' o 'RESUELTO'");
                return incidenteEditado;

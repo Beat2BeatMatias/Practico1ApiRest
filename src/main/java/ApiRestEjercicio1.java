@@ -84,6 +84,7 @@ public class ApiRestEjercicio1 {
                 return new Gson().toJson(new StandarResponse(StatusResponse.ERROR, "El usuario a borrar no existe"));
             }
         });
+
         //Métodos para proyecto=========================================================================================
         get("/proyecto", (request, response) -> {
             response.type("application/json");
@@ -135,6 +136,7 @@ public class ApiRestEjercicio1 {
                 return new Gson().toJson(new StandarResponse(StatusResponse.ERROR, "El proyecto a borrar no existe"));
             }
         });
+
         //Métodos para incidentes=======================================================================================
         get("/incidente",(request, response) -> {
             response.type("application/json");
@@ -159,6 +161,7 @@ public class ApiRestEjercicio1 {
                 return new Gson().toJson(new StandarResponse(StatusResponse.ERROR, e.getMessage()));
             }
         });
+
         //Métodos de la API=============================================================================================
         get("/usuario/:id/proyectos",(request, response) -> {
             response.type("application/json");
